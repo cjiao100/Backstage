@@ -2,14 +2,17 @@
  * @Author: cjiao100
  * @Date: 2019-09-26 16:48:07
  * @LastEditors: cjiao100
- * @LastEditTime: 2019-09-26 23:09:29
+ * @LastEditTime: 2019-09-27 11:31:35
  * @Description: login && register
  */
 
 const express = require('express')
 const bcrypt = require('bcrypt')
 const gravatar = require('gravatar')
+const jwt = require('jsonwebtoken')
+
 const User = require('../../moduls/User')
+const keys = require('../../config/keys').secretOrkey
 const router = express.Router()
 
 /**
@@ -76,12 +79,32 @@ router.post('/login', (req, res) => {
 
     bcrypt.compare(password, user.password).then(isMatch => {
       if (isMatch) {
-        return res.json({ msg: 'session' })
+        const rule = {
+          id: user._id,
+          name: user.name
+        }
+        // 规则、加密名字、过期时间、箭头函数
+        jwt.sign(rule, keys, { expiresIn: 3600 }, (err, token) => {
+          if (err) throw err
+
+          res.json({
+            success: true,
+            token: 'cjw' + token
+          })
+        })
       } else {
         return res.status(400).json({ password: '密码错误' })
       }
     })
   })
+})
+
+/**
+ * $ GET api/users/current
+ * @Description 获取用户信息
+ */
+router.get('/current', (req, res) => {
+  res.json({ msg: 'success' })
 })
 
 module.exports = router

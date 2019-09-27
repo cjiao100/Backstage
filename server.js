@@ -2,12 +2,13 @@
  * @Author: cjiao100
  * @Date: 2019-09-25 19:34:28
  * @LastEditors: cjiao100
- * @LastEditTime: 2019-09-26 19:58:31
+ * @LastEditTime: 2019-09-27 11:36:21
  * @Description: 入口文件
  */
 const express = require('express')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
+const passport = require('passport')
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -15,6 +16,7 @@ const db = require('./config/keys').mongoURI
 
 const users = require('./routes/api/users')
 
+app.use(passport.initialize())
 app.use(
   bodyParser.urlencoded({
     extended: false
