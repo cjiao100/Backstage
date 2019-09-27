@@ -2,7 +2,7 @@
  * @Author: cjiao100
  * @Date: 2019-09-26 16:48:07
  * @LastEditors: cjiao100
- * @LastEditTime: 2019-09-27 11:31:35
+ * @LastEditTime: 2019-09-27 18:13:35
  * @Description: login && register
  */
 
@@ -10,6 +10,7 @@ const express = require('express')
 const bcrypt = require('bcrypt')
 const gravatar = require('gravatar')
 const jwt = require('jsonwebtoken')
+const passport = require('passport')
 
 const User = require('../../moduls/User')
 const keys = require('../../config/keys').secretOrkey
@@ -89,7 +90,7 @@ router.post('/login', (req, res) => {
 
           res.json({
             success: true,
-            token: 'cjw' + token
+            token: 'Bearer ' + token
           })
         })
       } else {
@@ -103,8 +104,16 @@ router.post('/login', (req, res) => {
  * $ GET api/users/current
  * @Description 获取用户信息
  */
-router.get('/current', (req, res) => {
-  res.json({ msg: 'success' })
-})
+router.get(
+  '/current',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    res.json({
+      id: req.user._id,
+      name: req.user.name,
+      email: req.user.email
+    })
+  }
+)
 
 module.exports = router
