@@ -2,7 +2,7 @@
  * @Author: cjiao100
  * @Date: 2019-09-29 08:59:27
  * @LastEditors: cjiao100
- * @LastEditTime: 2019-09-29 11:31:58
+ * @LastEditTime: 2019-09-29 21:21:38
  * @Description: profileAPI
  */
 const express = require('express')
@@ -87,20 +87,16 @@ router.get(
 )
 
 /**
- * $ POST api/profiles/detele/:id
+ * $ DELETE api/profiles/delete/:id
  * @Description: 删除单个信息
  */
-router.get(
-  '/:id',
+router.delete(
+  '/delete/:id',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
-    Profile.findOne({ _id: req.params.id })
+    Profile.findOneAndRemove({ _id: req.params.id })
       .then(profile => {
-        if (!profile) {
-          res.status(404).json('没有内容')
-        }
-
-        res.json(profile)
+        profile.save().then(profile => res.json(profile))
       })
       .catch(err => res.status(400).json(err))
   }

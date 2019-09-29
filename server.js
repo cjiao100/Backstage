@@ -2,7 +2,7 @@
  * @Author: cjiao100
  * @Date: 2019-09-25 19:34:28
  * @LastEditors: cjiao100
- * @LastEditTime: 2019-09-29 08:59:32
+ * @LastEditTime: 2019-09-29 21:28:30
  * @Description: 入口文件
  */
 const express = require('express')
@@ -33,7 +33,8 @@ app.use('/api/profiles', profile)
 mongoose
   .connect(db, {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useFindAndModify: false
   })
   .then(() => console.log('MongoDB Connected'))
   .catch(err => console.log(err))
