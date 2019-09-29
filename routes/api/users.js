@@ -2,7 +2,7 @@
  * @Author: cjiao100
  * @Date: 2019-09-26 16:48:07
  * @LastEditors: cjiao100
- * @LastEditTime: 2019-09-27 18:13:35
+ * @LastEditTime: 2019-09-29 08:35:07
  * @Description: login && register
  */
 
@@ -35,7 +35,7 @@ router.post('/register', (req, res) => {
   // 查询数据库中是否有邮箱
   User.findOne({ email: req.body.email }).then(user => {
     if (user) {
-      return res.status(400).json({ email: '邮箱已被注册' })
+      return res.status(400).json('邮箱已被注册')
     } else {
       const avatar = gravatar.url('req.body.email', {
         // 图片尺寸
@@ -47,6 +47,7 @@ router.post('/register', (req, res) => {
         name: req.body.name,
         email: req.body.email,
         avatar,
+        identity: req.body.identity,
         password: req.body.password
       })
 
@@ -75,14 +76,16 @@ router.post('/login', (req, res) => {
 
   User.findOne({ email }).then(user => {
     if (!user) {
-      return res.status(404).json({ email: '用户不存在' })
+      return res.status(404).json('用户不存在')
     }
 
     bcrypt.compare(password, user.password).then(isMatch => {
       if (isMatch) {
         const rule = {
           id: user._id,
-          name: user.name
+          name: user.name,
+          avatar: user.avatar,
+          identity: user.identity
         }
         // 规则、加密名字、过期时间、箭头函数
         jwt.sign(rule, keys, { expiresIn: 3600 }, (err, token) => {
@@ -94,7 +97,7 @@ router.post('/login', (req, res) => {
           })
         })
       } else {
-        return res.status(400).json({ password: '密码错误' })
+        return res.status(400).json('密码错误')
       }
     })
   })
@@ -111,7 +114,8 @@ router.get(
     res.json({
       id: req.user._id,
       name: req.user.name,
-      email: req.user.email
+      email: req.user.email,
+      identity: req.user.identity
     })
   }
 )

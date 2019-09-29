@@ -1,32 +1,37 @@
 /*
  * @Author: cjiao100
- * @Date: 2019-09-26 17:08:35
+ * @Date: 2019-09-29 08:54:07
  * @LastEditors: cjiao100
- * @LastEditTime: 2019-09-29 08:36:15
- * @Description: 用户模型
+ * @LastEditTime: 2019-09-29 08:58:11
+ * @Description: 资金流水
  */
+
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const UserSchema = new Schema({
-  name: {
+const ProfileSchema = new Schema({
+  type: {
     type: String,
     required: true
   },
-  email: {
+  desc: {
     type: String,
     required: true
   },
-  password: {
+  incode: {
     type: String,
     required: true
   },
-  avatar: {
+  expend: {
+    type: String,
+    required: true
+  },
+  cash: {
+    type: String,
+    required: true
+  },
+  remark: {
     type: String
-  },
-  identity: {
-    type: String,
-    required: true
   },
   date: {
     type: Date,
@@ -34,4 +39,4 @@ const UserSchema = new Schema({
   }
 })
 
-module.exports = mongoose.model('users', UserSchema)
+module.exports = mongoose.model('profile', ProfileSchema)
