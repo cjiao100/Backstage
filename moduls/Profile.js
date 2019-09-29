@@ -2,7 +2,7 @@
  * @Author: cjiao100
  * @Date: 2019-09-29 08:54:07
  * @LastEditors: cjiao100
- * @LastEditTime: 2019-09-29 08:58:11
+ * @LastEditTime: 2019-09-29 10:55:43
  * @Description: 资金流水
  */
 
@@ -18,20 +18,25 @@ const ProfileSchema = new Schema({
     type: String,
     required: true
   },
-  incode: {
+  // 收入
+  income: {
     type: String,
     required: true
   },
+  // 支出
   expend: {
     type: String,
     required: true
   },
+  // 金额
   cash: {
     type: String,
     required: true
   },
+  // 备注
   remark: {
-    type: String
+    type: String,
+    default: '无'
   },
   date: {
     type: Date,
