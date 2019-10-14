@@ -2,7 +2,7 @@
  * @Author: cjiao100
  * @Date: 2019-09-26 16:48:07
  * @LastEditors: cjiao100
- * @LastEditTime: 2019-10-14 10:57:54
+ * @LastEditTime: 2019-10-14 20:53:20
  * @Description: login && register
  */
 
@@ -88,7 +88,7 @@ router.post('/login', (req, res) => {
           identity: user.identity
         }
         // 规则、加密名字、过期时间、箭头函数
-        jwt.sign(rule, keys, { expiresIn: 10 }, (err, token) => {
+        jwt.sign(rule, keys, { expiresIn: 3600 }, (err, token) => {
           if (err) throw err
 
           res.json({

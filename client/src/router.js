@@ -2,7 +2,7 @@
  * @Author: cjiao100
  * @Date: 2019-10-11 09:40:42
  * @LastEditors: cjiao100
- * @LastEditTime: 2019-10-14 15:55:48
+ * @LastEditTime: 2019-10-14 21:43:54
  * @Description: 路由管理
  */
 import Vue from 'vue'
@@ -22,7 +22,23 @@ const router = new Router({
     {
       path: '/index',
       name: 'index',
-      component: () => import('./views/index')
+      component: () => import('./views/index'),
+      children: [
+        {
+          path: '',
+          component: () => import('./views/home')
+        },
+        {
+          path: '/home',
+          name: 'home',
+          component: () => import('./views/home')
+        },
+        {
+          path: '/info',
+          name: 'userInfo',
+          component: () => import('./views/info')
+        }
+      ]
     },
     {
       path: '/register',

@@ -2,7 +2,7 @@
  * @Author: cjiao100
  * @Date: 2019-10-11 09:40:42
  * @LastEditors: cjiao100
- * @LastEditTime: 2019-10-14 12:45:21
+ * @LastEditTime: 2019-10-14 21:24:25
  * @Description: 状态管理
  */
 import Vue from 'vue'
@@ -46,6 +46,10 @@ export default new Vuex.Store({
     },
     setUser: ({ commit }, user) => {
       commit(types.SET_USER, user)
+    },
+    clearCurrentState: ({ commit }) => {
+      commit(types.SET_AUTHENTICATED, false)
+      commit(types.SET_USER, {})
     }
   }
 })
