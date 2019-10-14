@@ -2,15 +2,16 @@
  * @Author: cjiao100
  * @Date: 2019-10-11 09:40:42
  * @LastEditors: cjiao100
- * @LastEditTime: 2019-10-14 10:16:52
+ * @LastEditTime: 2019-10-14 15:55:48
  * @Description: 路由管理
  */
 import Vue from 'vue'
 import Router from 'vue-router'
+// import store from './store'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
@@ -44,3 +45,21 @@ export default new Router({
     }
   ]
 })
+
+// 路由守卫
+router.beforeEach((to, from, next) => {
+  const isLogin = localStorage.BToken ? true : false
+
+  // window.console.log(store)
+  // window.console.log(store.getters.user)
+
+  if (to.path === '/login') {
+    isLogin ? next('/index') : next()
+  } else if (to.path === '/register') {
+    next()
+  } else {
+    isLogin ? next() : next('/login')
+  }
+})
+
+export default router

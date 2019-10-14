@@ -2,7 +2,7 @@
  * @Author: cjiao100
  * @Date: 2019-10-14 10:11:51
  * @LastEditors: cjiao100
- * @LastEditTime: 2019-10-14 10:22:23
+ * @LastEditTime: 2019-10-14 12:55:24
  * @Description: 登录
  -->
 <template>
@@ -52,6 +52,8 @@
 </template>
 
 <script>
+import jwt_decode from 'jwt-decode'
+
 export default {
   name: 'login',
   data() {
@@ -87,6 +89,14 @@ export default {
                 message: '登录成功',
                 type: 'success'
               })
+              const { token } = value.data
+              localStorage.setItem('BToken', token)
+              // 解析Token
+              const decoded = jwt_decode(token)
+              console.log(decoded)
+              // 将解析后的数据放入Vuex中
+              this.$store.dispatch('setAuthenticated', !this.isEmpty(decoded))
+              this.$store.dispatch('setUser', decoded)
               this.$router.push('/index')
             })
             .catch(err => {
@@ -100,6 +110,14 @@ export default {
           return false
         }
       })
+    },
+    isEmpty(value) {
+      return (
+        value === undefined ||
+        value === null ||
+        (typeof value === 'object' && Object.keys(value).length === 0) ||
+        (typeof value === 'string' && value.trim().length === 0)
+      )
     }
   }
 }
@@ -147,6 +165,6 @@ export default {
   color: #333;
 }
 .tiparea a {
-  color: #409eff
+  color: #409eff;
 }
 </style>
