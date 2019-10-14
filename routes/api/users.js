@@ -2,7 +2,7 @@
  * @Author: cjiao100
  * @Date: 2019-09-26 16:48:07
  * @LastEditors: cjiao100
- * @LastEditTime: 2019-09-29 08:35:07
+ * @LastEditTime: 2019-10-12 12:23:29
  * @Description: login && register
  */
 
@@ -31,7 +31,7 @@ router.get('/test', (req, res) => {
  * @Description: 注册接口
  */
 router.post('/register', (req, res) => {
-  // console.log(req)
+  console.log(req.body)
   // 查询数据库中是否有邮箱
   User.findOne({ email: req.body.email }).then(user => {
     if (user) {
@@ -48,7 +48,7 @@ router.post('/register', (req, res) => {
         email: req.body.email,
         avatar,
         identity: req.body.identity,
-        password: req.body.password
+        password: req.body.pass
       })
 
       bcrypt.genSalt(10, function(err, salt) {

@@ -2,7 +2,7 @@
  * @Author: cjiao100
  * @Date: 2019-10-11 09:40:42
  * @LastEditors: cjiao100
- * @LastEditTime: 2019-10-11 10:40:04
+ * @LastEditTime: 2019-10-11 16:51:22
  * @Description: 路由管理
  */
 import Vue from 'vue'
@@ -22,6 +22,16 @@ export default new Router({
       path: '/index',
       name: 'index',
       component: () => import('./views/index')
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: () => import('./views/register')
+    },
+    {
+      path: '/404',
+      name: '404',
+      component: () => import('./views/404')
     }
   ]
 })
