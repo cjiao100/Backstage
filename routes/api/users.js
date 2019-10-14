@@ -2,7 +2,7 @@
  * @Author: cjiao100
  * @Date: 2019-09-26 16:48:07
  * @LastEditors: cjiao100
- * @LastEditTime: 2019-10-12 12:23:29
+ * @LastEditTime: 2019-10-14 10:19:05
  * @Description: login && register
  */
 
@@ -72,7 +72,7 @@ router.post('/register', (req, res) => {
  */
 router.post('/login', (req, res) => {
   const email = req.body.email
-  const password = req.body.password
+  const password = req.body.pass
 
   User.findOne({ email }).then(user => {
     if (!user) {
