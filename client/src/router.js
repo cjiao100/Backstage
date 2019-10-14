@@ -2,7 +2,7 @@
  * @Author: cjiao100
  * @Date: 2019-10-11 09:40:42
  * @LastEditors: cjiao100
- * @LastEditTime: 2019-10-11 16:51:22
+ * @LastEditTime: 2019-10-14 09:53:11
  * @Description: 路由管理
  */
 import Vue from 'vue'
@@ -32,6 +32,10 @@ export default new Router({
       path: '/404',
       name: '404',
       component: () => import('./views/404')
+    },
+    {
+      path: '*',
+      redirect: '/404'
     }
   ]
 })
